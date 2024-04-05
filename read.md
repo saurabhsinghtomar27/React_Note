@@ -7,7 +7,7 @@
  # Hooks
  ## useState
 
-it is use to showcase manipulate of thing in ui
+Tt is used to showcase UI Updation
 <br>
 Example
 
