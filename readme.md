@@ -182,4 +182,44 @@ It is library which we use for routing
 ```
 npm i react-router-dom
 ```
+### Example 
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import Home from '../Routes/Home.jsx'
+import About from '../Routes/About.jsx'
+import Contact from '../Routes/Contact.jsx'
+import User from '../Routes/User.jsx'
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+    <Route path='' element={<Home />} />
+    <Route path='about' element={<About />} />
+    <Route path='contact' element={<Contact />} />
+    <Route path='user/:userid' element={<User />} />
+    </>
+     
+  
+  )
+)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+)
+```
+### User.jsx
+```javascript
+import React from 'react'
+import {useParams} from 'react-router-dom'
+function User() {
+    const {userid}=useParams()
+  return (
+    <div>user {userid}</div>
+  )
+}
+
+export default User
+```
 
