@@ -1,8 +1,14 @@
 # React Notes
 ## How to Create a React App
- npm create vite@latest -> vite + React app
+### vite + React
+```javascript
+ npm create vite@latest
+ ````
 
- npx create-create-app project_name -> React App
+###React
+```javascript
+ npx create-create-app project_name 
+ ``` 
 
  # Hooks
  ## useState
@@ -169,3 +175,11 @@ function App() {
 export default App
 
 ```
+
+## React Router
+It is library which we use for routing
+
+```
+npm i react-router-dom
+```
+
