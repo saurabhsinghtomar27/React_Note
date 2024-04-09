@@ -175,8 +175,8 @@ function App() {
 export default App
 
 ```
-
-## React Router
+# React Router
+[Refer this routing Documentation](https://www.w3schools.com/react/react_router.asp) <br>
 It is library which we use for routing
 
 ```
@@ -206,7 +206,7 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </React.StrictMode>
 )
 ```
 ### User.jsx
@@ -222,4 +222,45 @@ function User() {
 
 export default User
 ```
+# useContext
+[Refer this documentation](https://www.w3schools.com/react/react_usecontext.asp) <br>
+React Context is a way to manage state globally. <br>
+It can be used together with the useState Hook to share state between deeply nested components more easily than with useState alone.
+
+## Example
+``` javascript
+import { useState } from 'react'
+import {createContext} from 'react'
+import './App.css'
+import Login from './components/Login'
+import Profile from './components/Profile'
+export const userContext=createContext()
+function App() {
+  const [name, setname] = useState("saurabh")
+
+  return (
+    <>
+     <userContext.Provider value={name}>
+      <Login />
+      <Profile />
+     </userContext.Provider>
+    </>
+  )
+}
+
+export default App
+```
+### profile File
+``` javascript
+import React, { useContext } from 'react'
+import { userContext } from '../App';
+function Profile() {
+   const user=useContext(userContext);
+  return (
+    <div>Profile {user}</div>
+  )
+}
+export default Profile;
+```
+
 
