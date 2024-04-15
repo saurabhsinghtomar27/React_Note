@@ -262,5 +262,135 @@ function Profile() {
 }
 export default Profile;
 ```
+### context Api Project
 
+# Redux
+Redux and Redux-toolkit
+<br>
+Store-> to store data (same like that we store in context)
+<br>
+reducer-> A reducer is a pure function that handles state logic within Redux.
+<br>
+It accepts two arguments: the previous state and an action.
+<br>
+The reducer’s primary job is to calculate the next state based on the existing state and the dispatched action.
+<br>
+It then returns the updated state, facilitating changes in React view components.
+<br>
+useSelector-> to select some value from store
+<br>
+useDispatch-> to send some value in store
+```javascript
+npm install @reduxjs/toolkit
+```
+```javascript
+npm install redux
+```
+```javascript
+npm i react-redux
+```
+## Steps how to used Redux
+## Store (Making store ) 
+```javascript
+import { configureStore } from "@reduxjs/toolkit";
+import todoReducer from '../features/todo/todoSlice'
+export const store=configureStore({
+    reducer:todoReducer
+})
+```
+## slicer is used to give functionalities to store
+```javascript
+import { createSlice,nanoid } from "@reduxjs/toolkit";
+
+const initialState={
+    todos:[{id:1,text:"hello World"}]
+}
+
+export const todoSlice=createSlice({
+    name:'todo',
+    initialState,
+    reducers:{
+        addTodo:(state,action)=>{
+            const todo={
+                id:nanoid(),
+                text:action.payload
+            }
+            state.todos.push(todo)
+        },
+        removeTodo:(state,action)=>{
+            state.todos=state.todos.filter((todo)=>todo.id!==action.payload)
+        },
+    }
+})
+export const {addTodo,removeTodo}=todoSlice.actions
+export default todoSlice.reducer
+```
+## Add Provider in main js
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+import { Provider } from 'react-redux'
+import { store } from './app/store.js'
+ReactDOM.createRoot(document.getElementById('root')).render(
+ 
+    
+    <Provider store={store}>
+      <App />
+    </Provider>,
+)
+
+```
+## Add todo using Dispatch
+```javascript
+import React, { useState } from 'react'
+import { useDispatch} from 'react-redux'
+import {addTodo} from '../features/todo/todoSlice'
+function AddTodo() {
+    const [input,setInput]=useState('')
+    const dispatch=useDispatch()
+    const addTodoHandler=(e)=>{
+        e.preventDefault()
+        // alert("cd")
+        dispatch(addTodo(input))
+        setInput('')
+    }
+  return (
+    <>
+    <div>AddTodo</div>
+    <form onSubmit={addTodoHandler}>
+        <input type='text' value={input} onChange={(e)=>setInput(e.target.value)} />
+       <button>Submit</button>
+    </form>
+    </>
+    
+  )
+}
+
+export default AddTodo
+```
+## Deleting todo using useDispatch and useSelector
+```javascript
+import React from 'react'
+import { useSelector,useDispatch } from 'react-redux'
+import {removeTodo} from '../features/todo/todoSlice'
+function Todos() {
+   const todos= useSelector(state=>state.todos)
+   const dispatch=useDispatch()
+  return (
+    <>
+      <div>Todos</div>
+      {todos.map((todo)=>(
+        <li key={todo.id}>
+            {todo.text}
+            <button onClick={()=>dispatch(removeTodo(todo.id))}>X</button>
+        </li>
+      ))}
+    </>
+  )
+}
+
+export default Todos
+```
 
